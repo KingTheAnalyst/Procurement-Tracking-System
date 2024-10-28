@@ -17,6 +17,8 @@
 This document serves as a guide to the **Procurement System Dashboard** developed for *Enterprise Manufacturers Ltd.* The purpose of the dashboard is to centralize and analyze supplier quality data, allowing the company to identify patterns and trends in vendor, plant, and material performance, as well as the impacts of defects.
 
 Given the absence of a procurement system, the dashboard is designed to address inconsistencies between different plants and vendors, providing insights into defective quantities, downtime, and the overall performance of suppliers.
+
+To access the live dashboard, [click here](https://app.powerbi.com/groups/me/reports/1eb85658-5b68-4f7e-84d1-a5d0f43971aa/bc355ff8a2c0e203ae0b?experience=power-bi).
 ## Purpose
 
 *Enterprise Manufacturers Ltd.* needed a solution to validate the quality of goods supplied by vendors and track the consistency of material quality across multiple plants. The goal of this syste, is to provide concise and informed insights to the management team to optimize procurement decisions, reduce downtime, and minimize manufacturing defects.
