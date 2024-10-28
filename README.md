@@ -414,3 +414,7 @@ This dashboard page provides a comprehensive view of production defects and down
    - **Description**: This indirect parameter classifies vendors into risk categories (High, Medium, Low) based on their total downtime hours, providing insights into their impact on operational efficiency.
    - **Effect on Data**: Vendors are automatically categorized, which influences the display of risk analysis visualizations throughout the report.
    - **User Interaction**: Users do not directly interact with this parameter, but it provides valuable insights into which vendors present the greatest risk to operations due to downtime, assisting in decision-making processes.
+
+---
+# **Conclusion**
+The Procurement System Dashboard serves as a critical tool for Enterprise Manufacturers Ltd. in understanding supplier quality, optimizing procurement decisions, and minimizing downtime caused by defects. The structured layout and calculated measures empower the management team to derive meaningful insights, enhancing their strategic decision-making processes.
