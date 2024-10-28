@@ -1,0 +1,52 @@
+## Introduction
+
+This document serves as a guide to the **Procurement System Dashboard** developed for *Enterprise Manufacturers Ltd.* The purpose of the dashboard is to centralize and analyze supplier quality data, allowing the company to identify patterns and trends in vendor, plant, and material performance, as well as the impacts of defects.
+
+Given the absence of a procurement system, the dashboard is designed to address inconsistencies between different plants and vendors, providing insights into defective quantities, downtime, and the overall performance of suppliers.
+## Purpose
+
+*Enterprise Manufacturers Ltd.* needed a solution to validate the quality of goods supplied by vendors and track the consistency of material quality across multiple plants. The goal of this project is to provide concise and informed insights to the management team to optimize procurement decisions, reduce downtime, and minimize manufacturing defects.
+
+## Objectives
+
+The dashboard aims to solve the following business problems:
+- Help the management team make informed procurement decisions.
+- Centralize supplier quality data from various plants and vendors.
+- Identify vendors and plants that contribute the most to defects and downtime.
+- Provide insights on material and vendor performance across different locations.
+
+## System Overview
+
+The **Procurement Tracking System** enables monitoring of the quality of materials supplied by vendors as well as the performance of the company's manufacturing plants. Each page of the system contains key performance indicators (KPIs) that provide insights into both vendor and plant efficiency. Users can apply various parameters and filters to gain a comprehensive overview and drill down into specific areas for deeper analysis.
+
+## Target Audience
+
+**Management Team**: This dashboard is meant for decision-makers who need to monitor and improve supplier and plant efficiency.
+
+## Data Sources
+
+- **Excel Sheets**
+
+## Data Model Structure
+
+- **Fact Table**: Contains essential production and supplier-related data.
+  - **Fields**:
+    - Date
+    - Vendor
+    - Plant Location
+    - Category
+    - Material Type
+    - Defect Type
+    - Defect
+    - Total Defect Qty
+    - Total Downtime Minutes
+
+- **Dimension Tables**:
+  - **Plant**: `PlantID`, `Plant Location`
+  - **Vendor**: `VendorID`, `Vendor`
+  - **Procurement Category**: `CategoryID`, `Category`
+  - **Material**: `Material ID`, `Material Type`
+  - **Defect Type**: `Defect Type ID`, `Defect Type`
+  - **Defect**: `Defect ID`, `Defect`
+
+
