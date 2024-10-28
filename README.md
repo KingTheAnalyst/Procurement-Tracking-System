@@ -21,7 +21,7 @@ Given the absence of a procurement system, the dashboard is designed to address 
 To access the live system, [click here](https://app.powerbi.com/groups/me/reports/1eb85658-5b68-4f7e-84d1-a5d0f43971aa/bc355ff8a2c0e203ae0b?experience=power-bi).
 ## Purpose
 
-*Enterprise Manufacturers Ltd.* needed a solution to validate the quality of goods supplied by vendors and track the consistency of material quality across multiple plants. The goal of this syste, is to provide concise and informed insights to the management team to optimize procurement decisions, reduce downtime, and minimize manufacturing defects.
+*Enterprise Manufacturers Ltd.* needed a solution to validate the quality of goods supplied by vendors and track the consistency of material quality across multiple plants. The goal of this system, is to provide concise and informed insights to the management team to optimize procurement decisions, reduce downtime, and minimize manufacturing defects.
 
 ## Objectives
 
