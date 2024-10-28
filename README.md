@@ -8,7 +8,7 @@
 - [Target Audience](#target-audience)
 - [Data Model Structure](#data-model-structure)
 - [Dashboard Layout & Navigation](#dashboard-layout--navigation)
-  - [Landing Page](#landing-page)
+  - [Landing Page](#home-Page)
   - [Overview](#overview)
   - [Vendor Performance Dashboard](#vendor-performance-dashboard)
   - [Plant Performance Dashboard](#plant-performance-dashboard)
