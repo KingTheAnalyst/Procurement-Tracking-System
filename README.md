@@ -1,4 +1,4 @@
-# Procurement System Dashboard Documentation
+# Procurement Tracking System Documentation
 
 ## Table of Contents
 - [Introduction](#introduction)
@@ -8,12 +8,6 @@
 - [Target Audience](#target-audience)
 - [Data Model Structure](#data-model-structure)
 - [Dashboard Layout & Navigation](#dashboard-layout--navigation)
-  - [Landing Page](#home-Page)
-  - [Overview](#overview)
-  - [Vendor Performance Dashboard](#vendor-performance-dashboard)
-  - [Plant Performance Dashboard](#plant-performance-dashboard)
-  - [Material Performance Dashboard](#material-performance-dashboard)
-  - [Downtime Impact Dashboard](#downtime-impact-dashboard)
 - [Data Definition](#data-definition)
 - [Calculated Measures](#calculated-measures)
 - [Parameters](#parameters)
@@ -25,7 +19,7 @@ This document serves as a guide to the **Procurement System Dashboard** develope
 Given the absence of a procurement system, the dashboard is designed to address inconsistencies between different plants and vendors, providing insights into defective quantities, downtime, and the overall performance of suppliers.
 ## Purpose
 
-*Enterprise Manufacturers Ltd.* needed a solution to validate the quality of goods supplied by vendors and track the consistency of material quality across multiple plants. The goal of this project is to provide concise and informed insights to the management team to optimize procurement decisions, reduce downtime, and minimize manufacturing defects.
+*Enterprise Manufacturers Ltd.* needed a solution to validate the quality of goods supplied by vendors and track the consistency of material quality across multiple plants. The goal of this syste, is to provide concise and informed insights to the management team to optimize procurement decisions, reduce downtime, and minimize manufacturing defects.
 
 ## Objectives
 
