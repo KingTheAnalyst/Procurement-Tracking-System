@@ -1,3 +1,22 @@
+# Procurement System Dashboard Documentation
+
+## Table of Contents
+- [Introduction](#introduction)
+- [Purpose](#purpose)
+- [Objectives](#objectives)
+- [System Overview](#system-overview)
+- [Target Audience](#target-audience)
+- [Data Model Structure](#data-model-structure)
+- [Dashboard Layout & Navigation](#dashboard-layout--navigation)
+  - [Landing Page](#landing-page)
+  - [Overview](#overview)
+  - [Vendor Performance Dashboard](#vendor-performance-dashboard)
+  - [Plant Performance Dashboard](#plant-performance-dashboard)
+  - [Material Performance Dashboard](#material-performance-dashboard)
+  - [Downtime Impact Dashboard](#downtime-impact-dashboard)
+- [Data Definition](#data-definition)
+- [Calculated Measures](#calculated-measures)
+
 ## Introduction
 
 This document serves as a guide to the **Procurement System Dashboard** developed for *Enterprise Manufacturers Ltd.* The purpose of the dashboard is to centralize and analyze supplier quality data, allowing the company to identify patterns and trends in vendor, plant, and material performance, as well as the impacts of defects.
@@ -21,7 +40,7 @@ The **Procurement Tracking System** enables monitoring of the quality of materia
 
 ## Target Audience
 
-**Management Team**: This dashboard is meant for decision-makers who need to monitor and improve supplier and plant efficiency.
+**Management Team**: This dashboard is meant for decision makers who need to monitor and improve supplier and plant efficiency.
 
 ## Data Sources
 
@@ -49,4 +68,36 @@ The **Procurement Tracking System** enables monitoring of the quality of materia
   - **Defect Type**: `Defect Type ID`, `Defect Type`
   - **Defect**: `Defect ID`, `Defect`
 
+---
 
+## Dashboard Layout & Navigation
+![alt text](https://github.com/KingTheAnalyst/Procurement-Tracking-System/blob/main/Overview.png "Overview Page")
+### 1. Landing Page
+**Purpose**: Provides an entry point to navigate the Supplier Quality Performance dashboard. It offers a brief overview of the dashboard's purpose with easy access to key performance indicators and analysis pages.
+
+**Features**:
+- **Company Name**: "Enterprise Manufacturers Ltd"
+- **Dashboard Title**: "Supplier Quality Performance Dashboard"
+- **Description**: Overview of the dashboard’s objective.
+- **Navigation Tabs**:
+  - Landing Page
+  - Overview
+  - Vendor
+  - Plant
+  - Material
+  - Impact
+
+### 2. Overview
+This dashboard page provides a comprehensive view of production defects and downtime, helping users monitor key metrics and trends.
+
+**Components**:
+- **Top Metrics Panel**: Displays total defects, downtime hours, and downtime costs with month-over-month (MoM) and year-over-year (YoY) comparisons.
+- **Monthly Trend Chart**: Visualizes defects or downtime trends over time.
+- **Worst Performers**: Highlights underperforming vendors, plants, defect types, and categories.
+- **Defect Impact Summary**: Categorizes impacts into Impact, No Impact, and Rejected.
+
+**Interactive Features**:
+- Toggle between "Defects" and "Downtime" to update charts.
+- Adjust "Downtime Cost per Hour" for financial impact visualization.
+
+---
