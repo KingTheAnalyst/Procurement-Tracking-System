@@ -16,6 +16,7 @@
   - [Downtime Impact Dashboard](#downtime-impact-dashboard)
 - [Data Definition](#data-definition)
 - [Calculated Measures](#calculated-measures)
+- [Parameters](#parameters)
 
 ## Introduction
 
@@ -158,3 +159,264 @@ This dashboard page provides a comprehensive view of production defects and down
 - Filters for time periods, vendors, plants, and defect types.
 
 ---
+# Data Definition
+
+1. **Category**: Record Category
+2. **Date**: Date of record
+3. **Defect**: The specific defect
+4. **Defect Type**: The type of defect (Impact, No impact, or Rejected)
+5. **Material Type**: Type of material supplied
+
+---
+
+# Calculated Measures
+
+1. **Defect Qty PY**:
+   - **Formula**:
+     ```DAX
+     CALCULATE([Total Defect Qty], SAMEPERIODLASTYEAR('Date'[Date]))
+     ```
+   - **Description**: This measure calculates the total quantity of defects for the same period in the previous year (PY). It uses the `SAMEPERIODLASTYEAR` function to compare the current period to the corresponding period one year ago.
+
+2. **MOM Defect Trend Color**:
+   - **Formula**:
+     ```DAX
+     IF([MOMGrowthDefectQty] > 0, "Red", "Green")
+     ```
+   - **Description**: This measure changes the color of the Month-over-Month (MOM) defect trend based on whether there is growth. If the MOM defect growth is positive, it returns "Red"; otherwise, it returns "Green."
+
+3. **MOM Defects Trend Icon**:
+   - **Formula**:
+     ```DAX
+     VAR Positive_Icon = UNICHAR(9650)
+     VAR Negative_Icon = UNICHAR(9660)
+     VAR Trend_Icon = IF([MOMGrowthDefectQty] > 0, Positive_Icon, Negative_Icon)
+     VAR DisplayTrend = Trend_Icon & " " & FORMAT([MOMGrowthDefectQty], "0.00%")
+     RETURN DisplayTrend
+     ```
+   - **Description**: This measure displays an icon (up arrow for positive growth, down arrow for negative) next to the MOM growth percentage. It formats the growth rate as a percentage and attaches the appropriate icon.
+
+4. **MOMGrowthDefectQty**:
+   - **Formula**:
+     ```DAX
+     DIVIDE([Total Defect Qty] - [Total Defect Qty PM], [Total Defect Qty PM])
+     ```
+   - **Description**: This measure calculates the growth rate of the total defect quantity compared to the previous month (PM). It divides the difference between the current and previous month's defect quantities by the previous month's defect quantity.
+
+5. **Total Defect Qty**:
+   - **Formula**:
+     ```DAX
+     SUM('Fact Table'[Total Defect Qty])
+     ```
+   - **Description**: This measure calculates the total number of defects by summing up the defect quantities in the fact table.
+
+6. **Total Defect Qty PM**:
+   - **Formula**:
+     ```DAX
+     CALCULATE([Total Defect Qty], PARALLELPERIOD('Date'[Date], -1, MONTH))
+     ```
+   - **Description**: This measure calculates the total quantity of defects for the previous month (PM), using `PARALLELPERIOD` to shift the date back by one month.
+
+7. **YOY Defect Trend Color**:
+   - **Formula**:
+     ```DAX
+     IF([YOYGrowthDefectQty] > 0, "Red", "Green")
+     ```
+   - **Description**: Similar to the MOM trend color, this measure changes the color based on the Year-over-Year (YOY) defect growth. Red indicates positive growth, and green indicates negative growth.
+
+8. **YOY Defects Trend Icon**:
+   - **Formula**:
+     ```DAX
+     VAR Positive_Icon = UNICHAR(9650)
+     VAR Negative_Icon = UNICHAR(9660)
+     VAR Trend_Icon = IF([YOYGrowthDefectQty] > 0, Positive_Icon, Negative_Icon)
+     VAR DisplayTrend = Trend_Icon & " " & FORMAT([YOYGrowthDefectQty], "0.00%")
+     RETURN DisplayTrend
+     ```
+   - **Description**: This measure displays an icon (up/down arrow) based on the YOY defect growth rate, followed by the percentage change.
+
+9. **YOYGrowthDefectQty**:
+   - **Formula**:
+     ```DAX
+     DIVIDE([Total Defect Qty] - 'Defect Quantity'[Defect Qty PY], 'Defect Quantity'[Defect Qty PY])
+     ```
+   - **Description**: This calculates the YOY growth rate for total defect quantities by comparing the current total defect quantity with that of the same period last year.
+
+10. **Total Defect Reports**:
+    - **Formula**:
+      ```DAX
+      COUNTROWS('Fact Table')
+      ```
+    - **Description**: Counts the total number of defect reports in the fact table.
+
+11. **Impact Defect Type**:
+    - **Formula**:
+      ```DAX
+      VAR Impact = CALCULATE(COUNT('Fact Table'[DefectID]), KEEPFILTERS('Fact Table'[Defect Type] = "Impact"))
+      VAR Defects = COUNT('Fact Table'[DefectTypeID])
+      RETURN DIVIDE(Impact, Defects)
+      ```
+    - **Description**: This calculates the proportion of defects categorized as "Impact" out of the total defects.
+
+12. **No Impact Defect Type**:
+    - **Formula**:
+      ```DAX
+      VAR NoImpact = CALCULATE(COUNT('Fact Table'[DefectID]), KEEPFILTERS('Fact Table'[Defect Type] = "No Impact"))
+      VAR Defects = COUNT('Fact Table'[DefectTypeID])
+      RETURN DIVIDE(NoImpact, Defects)
+      ```
+    - **Description**: Calculates the percentage of defects classified as "No Impact."
+
+13. **Rejected Defect Type**:
+    - **Formula**:
+      ```DAX
+      VAR Rejected = CALCULATE(COUNT('Fact Table'[DefectID]), KEEPFILTERS('Defect Type'[Defect Type] = "Rejected"))
+      VAR Defects = COUNT('Fact Table'[DefectTypeID])
+      RETURN DIVIDE(Rejected, Defects)
+      ```
+    - **Description**: Calculates the percentage of defects classified as "Rejected."
+
+14. **MOM Downtime Growth Icon**:
+    - **Formula**:
+      ```DAX
+      VAR Positive_Icon = UNICHAR(9650)
+      VAR Negative_Icon = UNICHAR(9660)
+      VAR Trend_Icon = IF([MOMGrowthDowntime] > 0, Positive_Icon, Negative_Icon)
+      VAR DisplayTrend = Trend_Icon & " " & FORMAT([MOMGrowthDowntime], "0.00%")
+      RETURN DisplayTrend
+      ```
+    - **Description**: Displays an icon (up/down arrow) based on Month-over-Month downtime growth and appends the growth percentage.
+
+15. **MOMGrowthDowntime**:
+    - **Formula**:
+      ```DAX
+      DIVIDE([Total DownTime(Hours)] - [Total Downtime Hours PM], [Total Downtime Hours PM])
+      ```
+    - **Description**: Calculates the growth rate of downtime hours compared to the previous month (PM).
+
+16. **Total Downtime Hours PM**:
+    - **Formula**:
+      ```DAX
+      CALCULATE([Total DownTime(Hours)], PARALLELPERIOD('Date'[Date], -1, MONTH))
+      ```
+    - **Description**: Total downtime hours for the previous month.
+
+17. **Total Downtime PY**:
+    - **Formula**:
+      ```DAX
+      CALCULATE([Total DownTime(Hours)], SAMEPERIODLASTYEAR('Date'[Date]))
+      ```
+    - **Description**: Total downtime hours for the same period last year (PY).
+
+18. **Total Downtime (Hours)**:
+    - **Formula**:
+      ```DAX
+      [Total Downtime(Minutes)] / 60
+      ```
+    - **Description**: Converts total downtime from minutes to hours.
+
+19. **Total Downtime (Minutes)**:
+    - **Formula**:
+      ```DAX
+      SUM('Fact Table'[Total Downtime Minutes])
+      ```
+    - **Description**: Total downtime in minutes.
+
+20. **YOY Downtime Trend Color**:
+    - **Formula**:
+      ```DAX
+      IF([YOYGrowthDowntime] > 0, "Red", "Green")
+      ```
+    - **Description**: Changes the color based on Year-over-Year downtime growth (red for growth, green for reduction).
+
+21. **YOY Downtime Trend Icon**:
+    - **Formula**:
+      ```DAX
+      VAR Positive_Icon = UNICHAR(9650)
+      VAR Negative_Icon = UNICHAR(9660)
+      VAR Trend_Icon = IF([YOYGrowthDowntime] > 0, Positive_Icon, Negative_Icon)
+      VAR DisplayTrend = Trend_Icon & " " & FORMAT([YOYGrowthDowntime], "0.00%")
+      RETURN DisplayTrend
+      ```
+    - **Description**: Displays a trend icon and YOY downtime growth percentage.
+
+22. **YOYGrowthDowntime**:
+    - **Formula**:
+      ```DAX
+      DIVIDE([Total DownTime(Hours)] - [Total Downtime PY], [Total Downtime PY])
+      ```
+    - **Description**: Year-over-Year growth of downtime hours.
+
+23. **Downtime Cost per Hour**:
+    - **Formula**:
+      ```DAX
+      [Total DownTime(Hours)] * 'Downtime Cost Parameter'[Downtime Cost Value]
+      ```
+    - **Description**: Calculates total cost of downtime based on hours and defined cost per hour.
+
+24. **Defect Cost per Defect**:
+    - **Formula**:
+      ```DAX
+      [Total Defect Qty] * 'Defect Cost Parameter'[Defect Cost Value]
+      ```
+    - **Description**: Calculates the total cost associated with defects.
+
+---
+## Parameters
+
+1. **Top N Parameter**
+   - **Formula**:
+     ```DAX
+     [Top N Parameter] = GENERATESERIES(0, 20, 1)
+     Top N Parameter Value = SELECTEDVALUE('Top N Parameter'[Top N Parameter], 10)
+     ```
+   - **Description**: This parameter generates a series of values ranging from 0 to 20, allowing users to select the "Top N" number of plants or vendors they wish to focus on based on defect quantity or downtime hours. The default value is set to 10 but can be adjusted by the user.
+   - **Effect on Data**: It filters the data to display only the top or bottom N plants or vendors based on the selected metric (defect quantity or downtime hours).
+   - **User Interaction**: Users can select their desired ranking (e.g., top 5, top 10) which influences the visualizations presented in the report.
+
+2. **Downtime Cost Parameter**
+   - **Formula**:
+     ```DAX
+     Downtime Cost Value = SELECTEDVALUE('Downtime Cost Parameter'[Downtime Cost], 10)
+     Downtime Cost Parameter = GENERATESERIES(0, 20, 1)
+     ```
+   - **Description**: This parameter creates a series of values from 0 to 20, representing the downtime cost per hour. Users can modify this value according to actual business data.
+   - **Effect on Data**: Adjusting the downtime cost value will directly influence all measures related to downtime costs, including Total Downtime Cost and Month-Over-Month/Year-Over-Year Downtime Cost, which will recalculate accordingly.
+   - **User Interaction**: Users can enter or select a specific cost per hour (e.g., $10/hour or $15/hour), and the entire report will update to reflect these changes in downtime cost metrics.
+
+3. **Plant Parameter**
+   - **Formula**:
+     ```DAX
+     Plant Parameter = {
+         ("Defect Quantity", NAMEOF('Rank Measures'[Rank_Plant_by_Defect_Qty]), 0),
+         ("Downtime Hours", NAMEOF('Rank Measures'[Rank_Plant_by_Downtime_Hours]), 1)
+     }
+     ```
+   - **Description**: This parameter allows users to toggle between analyzing plants based on defect quantity or downtime hours, enabling a focus shift between different ranking criteria.
+   - **Effect on Data**: Selecting either “Defect Quantity” or “Downtime Hours” will adjust the data and visualizations to reflect the chosen ranking and performance metrics.
+   - **User Interaction**: Users can choose whether to rank plants by defect quantity or total downtime hours, simplifying the analysis of plant performance based on specific KPIs.
+
+4. **Vendor Parameter**
+   - **Formula**:
+     ```DAX
+     Vendor Parameter = {
+         ("Defect Quantity", NAMEOF('Rank Measures'[Rank_Vendor_by_Defect_Qty]), 0),
+         ("Downtime Hours", NAMEOF('Rank Measures'[Rank_Vendor_by_Downtime_Hours]), 1)
+     }
+     ```
+   - **Description**: Similar to the Plant Parameter, this parameter enables users to toggle between analyzing vendors based on defect quantity or downtime hours.
+   - **Effect on Data**: The report will adjust to rank vendors either by the total number of defects or by the total downtime hours caused by their supplies, depending on the selection.
+   - **User Interaction**: Users can switch between metrics (defect quantity or downtime hours) for vendor performance analysis, aiding in identifying which vendors impact quality or downtime the most.
+
+5. **Risk Category Parameter**
+   - **Formula**:
+     ```DAX
+     Risk Category = 
+     VAR CurrentVendor = SELECTEDVALUE(Vendor[Vendor])
+     VAR TotalDowntimeHours = CALCULATE([Total DownTime(Hours)], FILTER(Vendor, Vendor[Vendor] = CurrentVendor))
+     RETURN IF(TotalDowntimeHours > 800, "High Risk", 
+               IF(TotalDowntimeHours <= 800 && TotalDowntimeHours >= 400, "Medium Risk", "Low Risk"))
+     ```
+   - **Description**: This indirect parameter classifies vendors into risk categories (High, Medium, Low) based on their total downtime hours, providing insights into their impact on operational efficiency.
+   - **Effect on Data**: Vendors are automatically categorized, which influences the display of risk analysis visualizations throughout the report.
+   - **User Interaction**: Users do not directly interact with this parameter, but it provides valuable insights into which vendors present the greatest risk to operations due to downtime, assisting in decision-making processes.
